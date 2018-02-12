@@ -4,8 +4,13 @@ MAINTAINER Richard Tuin <richard@egeniq.com>
 
 RUN usermod -a -G root www-data
 
-RUN apt-get update && apt-get install -y curl wget git zlib1g-dev
+RUN apt-get update && apt-get install -y curl wget git zlib1g-dev locales
 
+# Locales
+COPY assets/locale.gen /etc/locale.gen
+RUN locale-gen
+
+# PHP
 RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
     docker-php-ext-install mysqli && \
     docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
@@ -13,12 +18,15 @@ RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
     docker-php-ext-install opcache && \
     docker-php-ext-install zip
 
-RUN a2enmod rewrite
+COPY ./assets/php-custom.ini /usr/local/etc/php/conf.d/zzz-custom.ini
 
+# Apache
+RUN a2enmod rewrite
 COPY ./assets/vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Scripts
 COPY ./assets/entrypoint.sh /entrypoint.sh
 COPY ./assets/install_composer.sh /install_composer.sh
-COPY ./assets/php-custom.ini /usr/local/etc/php/conf.d/zzz-custom.ini
 
 RUN /install_composer.sh && \
     mv composer.phar /usr/local/bin/composer && \
@@ -27,7 +35,7 @@ RUN /install_composer.sh && \
 ONBUILD COPY src /src
 
 # Preferably run composer install during build-time
-ONBUILD RUN if [ -f "composer.json" ] && [ ! -d "vendor/composer" ]; then composer install -a; fi
+ONBUILD RUN if [ -f "composer.json" ] && [ ! -d "vendor/composer" ]; then composer install --prefer-dist --no-progress --no-ansi -a -n; fi
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]

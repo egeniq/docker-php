@@ -53,3 +53,15 @@ services:
     volumes:
       - ./src:/src:cached
 ```
+
+### Default configurations
+
+|---------------|------------------------|
+| date.timezone | Europe/Amsterdam       |
+
+
+## To do list
+
+- [ ] Tune apache
+  - [ ] Tune mpm_prefork if necessary
+  
