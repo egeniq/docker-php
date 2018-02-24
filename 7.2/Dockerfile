@@ -37,5 +37,7 @@ ONBUILD COPY src /src
 # Preferably run composer install during build-time
 ONBUILD RUN if [ -f "composer.json" ] && [ ! -d "vendor/composer" ]; then composer install --prefer-dist --no-progress --no-ansi -a -n; fi
 
+WORKDIR /src
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]
