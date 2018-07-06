@@ -54,10 +54,13 @@ services:
       - ./src:/src:cached
 ```
 
-### Default configurations
+### Important default configurations
 
-|---------------|------------------------|
-| date.timezone | Europe/Amsterdam       |
+| Component | Key               | Value                                                   |
+| ----------| ----------------- | ------------------------------------------------------- |
+| PHP       | date.timezone     | Europe/Amsterdam                                        |
+| OS        | Installed locales | nl_NL.UTF-8 UTF-8, en_GB.UTF-8 UTF-8, en_US.UTF-8 UTF-8 |
+
 
 
 ## To do list
