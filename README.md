@@ -6,7 +6,8 @@ configuration options for production-grade deployments.
 
 ## Supported tags
 
-* 7.2-onbuild
+* 7.2-onbuild (uses apache)
+* 7.2-nginx-onbuild
 
 ## Installed packages and extensions
 * Composer
@@ -60,11 +61,3 @@ services:
 | ----------| ----------------- | ------------------------------------------------------- |
 | PHP       | date.timezone     | Europe/Amsterdam                                        |
 | OS        | Installed locales | nl_NL.UTF-8 UTF-8, en_GB.UTF-8 UTF-8, en_US.UTF-8 UTF-8 |
-
-
-
-## To do list
-
-- [ ] Tune apache
-  - [ ] Tune mpm_prefork if necessary
-  
