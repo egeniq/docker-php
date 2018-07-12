@@ -1,4 +1,4 @@
-# Egeniq's PHP + Apache HTTPD Docker image
+# Egeniq's PHP + a webserver Docker image
 
 These Docker images are based on the official PHP images, 
 with several complementary packages and sensible default 
