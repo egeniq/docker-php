@@ -4,9 +4,21 @@ MAINTAINER Richard Tuin <richard@egeniq.com>
 
 RUN usermod -a -G root www-data
 
-RUN apt-get update && apt-get install -y curl wget git zlib1g-dev locales nginx
-#
-## Locales
+RUN apt-get update \
+    && apt-get install -y curl wget git zlib1g-dev locales gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY ./assets/nginx_signing.key /root/nginx_signing.key
+RUN apt-key add /root/nginx_signing.key
+
+RUN echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" > /etc/apt/sources.list.d/nginx60.list
+RUN echo "deb-src http://nginx.org/packages/mainline/debian/ stretch nginx" >> /etc/apt/sources.list.d/nginx60.list
+
+RUN apt-get update \
+    && apt-get install -y nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Locales
 COPY assets/locale.gen /etc/locale.gen
 RUN locale-gen
 
@@ -22,7 +34,8 @@ COPY ./assets/php-custom.ini /usr/local/etc/php/conf.d/zzz-custom.ini
 COPY ./assets/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 # Nginx
-COPY ./assets/site.conf /etc/nginx/sites-available/default
+RUN sed -i 's/user  nginx;/user  www-data;/' /etc/nginx/nginx.conf
+COPY ./assets/site.conf /etc/nginx/conf.d/default.conf
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
