@@ -6,6 +6,7 @@ configuration options for production-grade deployments.
 
 ## Supported tags
 
+* 5.6-onbuild (uses apache)
 * 7.2-onbuild (uses apache)
 * 7.2-nginx-onbuild
 
