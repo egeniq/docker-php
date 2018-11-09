@@ -48,6 +48,8 @@ RUN /install_composer.sh && \
     mv composer.phar /usr/local/bin/composer && \
     rm /install_composer.sh
 
+RUN composer global require hirak/prestissimo
+
 ONBUILD COPY src /src
 
 # Preferably run composer install during build-time
