@@ -5,7 +5,7 @@ MAINTAINER Richard Tuin <richard@egeniq.com>
 RUN usermod -a -G root www-data
 
 RUN apt-get update \
-    && apt-get install -y curl wget git zlib1g-dev locales gnupg \
+    && apt-get install -y curl wget git zlib1g-dev locales gnupg unzip \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./assets/nginx_signing.key /root/nginx_signing.key
