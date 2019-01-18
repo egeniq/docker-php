@@ -2,12 +2,13 @@
 
 These Docker images are based on the official PHP images, 
 with several complementary packages and sensible default 
-configuration options for production-grade deployments. 
+configuration options for production-grade deployments.
 
 ## Supported tags
 
 * 5.6-onbuild (uses apache)
 * 7.2-onbuild (uses apache)
+* 7.3-onbuild (uses apache)
 * 7.2-nginx-onbuild
 
 ## Installed packages and extensions

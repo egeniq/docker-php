@@ -4,7 +4,7 @@ MAINTAINER Richard Tuin <richard@egeniq.com>
 
 RUN usermod -a -G root www-data
 
-RUN apt-get update && apt-get install -y curl wget git zlib1g-dev locales && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl wget git zlib1g-dev locales unzip && rm -rf /var/lib/apt/lists/*
 
 # Locales
 COPY assets/locale.gen /etc/locale.gen
