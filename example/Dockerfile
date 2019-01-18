@@ -1,1 +1,1 @@
-FROM egeniq/php:7.2-onbuild
+FROM egeniq/php:7.3-onbuild
