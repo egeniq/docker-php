@@ -18,9 +18,22 @@ RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
 
 COPY ./assets/php-custom.ini /usr/local/etc/php/conf.d/zzz-custom.ini
 
+# Scripts
+COPY ./assets/entrypoint.sh /entrypoint.sh
+COPY ./assets/install_composer.sh /install_composer.sh
+
+RUN /install_composer.sh && \
+    mv composer.phar /usr/local/bin/composer && \
+    rm /install_composer.sh
+
+RUN composer global require hirak/prestissimo
+
 ONBUILD COPY src /src
+
+# Preferably run composer install during build-time
+ONBUILD RUN if [ -f "composer.json" ] && [ ! -d "vendor/composer" ]; then composer install --prefer-dist --no-progress --no-ansi -a -n; fi
 
 WORKDIR /src
 
-ENTRYPOINT ["docker-php-entrypoint"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php", "-a"]
