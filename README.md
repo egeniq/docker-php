@@ -9,6 +9,7 @@ configuration options for production-grade deployments.
 * 5.6-onbuild (uses apache)
 * 7.2-onbuild (uses apache)
 * 7.3-onbuild (uses apache)
+* 7.3-cli-onbuild
 * 7.2-nginx-onbuild
 
 ## Installed packages and extensions
